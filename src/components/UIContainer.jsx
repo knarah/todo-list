@@ -1,17 +1,19 @@
 import React from "react";
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import AddTodoButton from "./AddTodoButton";
-import { useTodosData } from "../hooks/useTodosData";
 import { DarkModeContext } from "../context/DarkModeContext";
+import { useTodosData } from "../hooks/useTodosData";
 import List from "./List";
 import Input from "./Input";
 
 function UIContainer() {
+  const { isDarkMode } = React.useContext(DarkModeContext);
+
   const [searchValue, setSearchValue] = React.useState();
   const [option, setOption] = React.useState("all");
+
+  const { todos, addTodo, editTodo, deleteTodo } = useTodosData();
   const theme = useTheme();
-  const { isDarkMode } = React.useContext(DarkModeContext);
-  const { todos } = useTodosData();
 
   return (
     <div className={isDarkMode ? "dark-mode" : "light-mode"}>
@@ -36,7 +38,13 @@ function UIContainer() {
             width: "70%",
           }}
         >
-          <List option={option} searchValue={searchValue} todos={todos} />
+          <List
+            option={option}
+            searchValue={searchValue}
+            todos={todos}
+            editTodo={editTodo}
+            deleteTodo={deleteTodo}
+          />
         </Box>
         <Box
           sx={{
@@ -46,7 +54,7 @@ function UIContainer() {
             marginRight: "10px",
           }}
         >
-          <AddTodoButton />
+          <AddTodoButton addTodo={addTodo} />
         </Box>
       </Container>
     </div>

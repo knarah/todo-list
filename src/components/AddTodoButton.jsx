@@ -2,11 +2,9 @@ import React from "react";
 import { IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ComposerModal from "./ComposerModal";
-import { useTodosData } from "../hooks/useTodosData";
+import PropTypes from "prop-types";
 
-function AddTodoButton() {
-  const { addTodo } = useTodosData();
-
+function AddTodoButton({ addTodo }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const openModal = () => {
@@ -41,5 +39,7 @@ function AddTodoButton() {
     </>
   );
 }
-
+AddTodoButton.propTypes = {
+  addTodo: PropTypes.func,
+};
 export default AddTodoButton;

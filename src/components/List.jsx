@@ -2,14 +2,12 @@ import React from "react";
 import { Box, FormControlLabel, Checkbox, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import { useTodosData } from "../hooks/useTodosData";
 import ComposerModal from "./ComposerModal";
 import PropTypes from "prop-types";
 
-function List({ todos, searchValue, option }) {
+function List({ searchValue, option, todos, editTodo, deleteTodo }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [value, setValue] = React.useState();
-  const { editTodo, deleteTodo } = useTodosData();
 
   const filteredTodos = React.useMemo(() => {
     const filteredBySearch = searchValue
@@ -115,6 +113,8 @@ List.propTypes = {
       isChecked: PropTypes.bool,
     })
   ),
+  editTodo: PropTypes.func,
+  deleteTodo: PropTypes.func,
   searchValue: PropTypes.string,
   option: PropTypes.string,
 };

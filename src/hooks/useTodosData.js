@@ -1,19 +1,7 @@
 import React from "react";
 
 export const useTodosData = () => {
-  //   localStorage.clear();
-  const storedData = localStorage.getItem("todos");
-
-  const [todos, setTodos] = React.useState(storedData && JSON.parse(storedData));
-  //   const storedData = localStorage.getItem("todos");
-
-  //   React.useEffect(() => {
-  //     localStorage.setItem("todos", JSON.stringify([...todos]));
-  //     const storedData = localStorage.getItem("todos");
-  //     if (storedData) {
-  //       setTodos(JSON.parse(storedData));
-  //     }
-  //   }, []);
+  const [todos, setTodos] = React.useState(() => readTodos());
 
   React.useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
@@ -25,9 +13,7 @@ export const useTodosData = () => {
       value: newTodo.value,
       isChecked: false,
     };
-
     setTodos((prevTodos) => [...(prevTodos || []), newTodoObj]);
-    localStorage.setItem("todos", JSON.stringify([...todos, newTodoObj]));
   };
 
   const editTodo = (newTodo) => {
@@ -53,7 +39,6 @@ export const useTodosData = () => {
         return updatedTodos;
       });
     }
-    // localStorage.setItem("todos", JSON.stringify([...todos, newTodoObj]));
   };
 
   const deleteTodo = (todoId) => {
@@ -62,4 +47,9 @@ export const useTodosData = () => {
   };
 
   return { todos, addTodo, editTodo, deleteTodo };
+};
+
+const readTodos = () => {
+  const todos = localStorage.getItem("todos");
+  return todos ? JSON.parse(todos) : [];
 };
